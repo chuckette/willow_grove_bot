@@ -1,8 +1,8 @@
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 module.exports = {
-	name: 'interactionCreate',
-	async execute(interaction) {
-		if (interaction.isCommand()) {
+  name: 'interactionCreate',
+  async execute(interaction) {
+    if (interaction.isCommand()) {
 
       const command = interaction.client.commands.get(interaction.commandName);
 
@@ -82,5 +82,5 @@ module.exports = {
           break;
       }
     }
-	},
+  },
 };

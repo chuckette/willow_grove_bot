@@ -7,11 +7,11 @@ module.exports = {
 		console.log(messageReaction);
 		// console.log(user);
 		// const newChannelEmbed = new MessageEmbed()
-		// 			.setColor('#ffffff')
-		// 			.setAuthor({ name: channel.guild.name, iconURL: channel.guild.iconURL() })
-		// 			.setDescription(`**Channel created: #${channel.name}**`)
-		// 			.setFooter(`ID: ${channel.id}`)
-		// 			.setTimestamp();
+		//			.setColor('#ffffff')
+		//			.setAuthor({ name: channel.guild.name, iconURL: channel.guild.iconURL() })
+		//			.setDescription(`**Channel created: #${channel.name}**`)
+		//			.setFooter(`ID: ${channel.id}`)
+		//			.setTimestamp();
 		// logChannel.send({ embeds: [newChannelEmbed] });
 	}
 }
