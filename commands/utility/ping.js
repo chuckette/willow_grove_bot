@@ -10,7 +10,7 @@ module.exports = {
 					.setColor('#ffffff')
 					.setTitle('Ping')
 					.setDescription('Pong!');
-		await interaction.reply({ embeds: [pingEmbed] });
+		await interaction.reply({ embeds: [pingEmbed], ephemeral: true });
 		// channel.send({ embeds: [pingEmbed] });
 	},
 };

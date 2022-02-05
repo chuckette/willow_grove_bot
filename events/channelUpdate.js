@@ -11,7 +11,5 @@ module.exports = {
 					.setFooter(`ID: ${channel.id}`)
 					.setTimestamp();
 		logChannel.send({ embeds: [newChannelEmbed] });
-
 	}
 }
-
