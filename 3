@@ -1,4 +1,3 @@
-const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 module.exports = {
 	name: 'interactionCreate',
 	async execute(interaction) {
@@ -27,58 +26,45 @@ module.exports = {
       colorMap.set('black', '936630878002626631');
       colorMap.set('white', '936631046496206918');
       const gaymerMap = new Map();
-      gaymerMap.set('gaymer', '936619867510038549');
-      gaymerMap.set('carders', '936628863461650452');
       gaymerMap.set('tabletops', '936628791801937991');
+      gaymerMap.set('carders', '936628863461650452');
+      gaymerMap.set('gaymer', '936619867510038549');
       const pronounMap = new Map();
-      pronounMap.set('she', '936614714132275201');
-      pronounMap.set('they', '936614643760250923');
       pronounMap.set('he', '936612642154504232');
+      pronounMap.set('they', '936614643760250923');
+      pronounMap.set('she', '936614714132275201');
       // Handle the selections
       let user = await interaction.guild.members.fetch(interaction.user.id);
+      // console.log(user.roles);
       switch (interaction.customId) {
         case 'colors':
-          interaction.update({ content: `You picked: ${interaction.values}` });
-          removeRoles = [];
+          // console.log(interaction.values);
+          // console.log(interaction.user);
+          // console.log(await interaction.guild.members.fetch(interaction.user.id).then(
+          //   (success) => {
+          //     return success.nickname
+          //   }
+          // ));
+          interaction.update({ content: `${user.nickname} picked: ${interaction.values}` });
+          console.log('prior')
           for (var [key, entry] of colorMap) {
             if (user.roles.cache.has(entry)) {
-              removeRoles.push(entry);
+              console.log(`found ${key}!`);
+              await user.roles.remove(entry).then(
+              console.log(`removed ${key}!`).catch(`failed to remove ${key}!`));
             }
           }
-          await user.roles.remove(removeRoles);
-          if (interaction.values[0] === 'none') return;
-          await user.fetch()
-          await user.roles.add([colorMap.get(interaction.values[0])]);
+          console.log('after')
+          await user.roles.add([colorMap.get(interaction.values[0])])
+          console.log(`added ${interaction.values[0]}`)
           break;
         case 'pronouns':
+          console.log(interaction.values);
           interaction.update({ content: `You picked: ${interaction.values}` })
-          removeRoles = [];
-          for (var [key, entry] of pronounMap) {
-            if (user.roles.cache.has(entry)) {
-              removeRoles.push(entry);
-            }
-          }
-          await user.roles.remove(removeRoles);
-          await user.fetch();
-          if (interaction.values[0] === 'none') return;
-          addedRoles = []
-          interaction.values.forEach((key) => addedRoles.push(pronounMap.get(key)));
-          await user.roles.add(addedRoles);
           break;
         case 'gaymer':
+          console.log(interaction.values);
           interaction.update({ content: `You picked: ${interaction.values}` })
-          removeRoles = [];
-          for (var [key, entry] of gaymerMap) {
-            if (user.roles.cache.has(entry)) {
-              removeRoles.push(entry);
-            }
-          }
-          await user.roles.remove(removeRoles);
-          if (interaction.values[0] === 'none') return;
-          await user.fetch();
-          addedRoles = []
-          interaction.values.forEach((key) => addedRoles.push(gaymerMap.get(key)));
-          await user.roles.add(addedRoles);
           break;
       }
     }

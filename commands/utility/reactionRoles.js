@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed, MessageActionRow, MessageSelectMenu } = require('discord.js');
+const { MessageActionRow, MessageSelectMenu } = require('discord.js');
 // const { reactRolesChannelId } = require('../../config.json');
 // const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 
@@ -59,6 +59,11 @@ module.exports = {
 							description: 'Gives the white role',
 							value: 'white',
 						},
+						{
+							label: 'None',
+							description: 'Removes color roles',
+							value: 'none',
+						},
 					])
 			);
 		const row2 = new MessageActionRow()
@@ -81,6 +86,11 @@ module.exports = {
 							label: 'He/Him',
 							description: 'Gives the he/him role',
 							value: 'he',
+						},
+						{
+							label: 'None',
+							description: 'Removes pronoun roles',
+							value: 'none',
 						},
 					])
 				.setMaxValues(3)
@@ -106,13 +116,14 @@ module.exports = {
 							description: 'Gives the tabletops role',
 							value: 'tabletops',
 						},
+						{
+							label: 'None',
+							description: 'Removes gaymer roles',
+							value: 'none',
+						},
 					])
 				.setMaxValues(3)
 			);
-		console.log('rows built');
-		console.log(row1);
-		console.log(row2);
-		console.log(row3);
 		await interaction.reply({content: 'User roles!', ephemeral: true, components: [row1, row2, row3]});
 	},
 };

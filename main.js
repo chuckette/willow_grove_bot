@@ -1,8 +1,7 @@
 // Require the necessary discord.js classes
 const fs = require('fs');
 const { Client, Collection, Intents } = require('discord.js');
-const { clientId, guildId, token } = require('./config.json');
-const { modCommandPermissions } = require('./config.json');
+const { token } = require('./config.json');
 
 // Create a new client instance
 const client = new Client({
