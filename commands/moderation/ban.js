@@ -32,6 +32,9 @@ module.exports = {
 		const user = await interaction.guild.members.fetch(await interaction.user.fetch());
 		const logChannel = await interaction.guild.channels.fetch(logChannelId);
 		const target = (interaction.options.getSubcommand() === 'user') ? await interaction.guild.members.fetch(await interaction.options.getUser('target')) : await interaction.guild.members.fetch(await interaction.options.getString('target'));
+		if (target === undefined) {
+			await interaction.reply({content: 'Unable to locate user!', ephemeral: true});
+		}
 		if (!interaction.memberPermissions.has([Permissions.FLAGS.KICK_MEMBERS, Permissions.FLAGS.BAN_MEMBERS]) || user.roles.highest.position <= target.roles.highest.position) {
 			logChannel.send({ embeds: [await buildPermissionFailEmbed(user,target)] });
 			interaction.reply({content: 'You can\'t ban them!', ephemeral: true})
@@ -41,7 +44,7 @@ module.exports = {
 		console.log(target);
 		interaction.guild.members.ban(target, {reason: reason});
 		banEmbed = await buildBanEmbed(await target.user.fetch(), reason);
-		await interaction.reply({ embeds: [banEmbed] });
+		await interaction.reply({ embeds: [banEmbed], ephemeral: true });
 		logChannel.send({ embeds: [banEmbed.addField('Banner', user.user.tag, true)] })
 	}
 };

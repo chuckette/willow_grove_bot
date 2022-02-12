@@ -3,13 +3,19 @@ const { guildId, logChannelId } = require('../config.json');
 module.exports = {
   name: 'channelUpdate',
   async execute(oldChannel, newChannel) {
-    const logChannel = await channel.guild.channels.fetch(logChannelId);
-    const newChannelEmbed = new MessageEmbed()
+    const logChannel = await oldChannel.guild.channels.fetch(logChannelId);
+    const channelChangedEmbed = new MessageEmbed()
           .setColor('#ffffff')
-          .setAuthor({ name: channel.guild.name, iconURL: channel.guild.iconURL() })
-          .setDescription(`**Channel created: #${channel.name}**`)
-          .setFooter(`ID: ${channel.id}`)
+          .setAuthor({ name: 'Channel Update' })
+          .setFooter({text: `id: ${oldChannel.id}`})
           .setTimestamp();
-    logChannel.send({ embeds: [newChannelEmbed] });
+    if(oldChannel.name !== newChannel.name) channelChangedEmbed.addField('Name changed', `From ${oldChannel.name} to ${newChannel.name}`)
+    if(oldChannel.topic !== newChannel.topic) {
+      const oldTopic = oldChannel.topic === null ? 'null' : oldChannel.topic;
+      const newTopic = newChannel.topic === null ? 'null' : newChannel.topic;
+      channelChangedEmbed.addFields({name: 'Old topic', value: oldTopic},{name: 'New topic', value: newTopic})
+    }
+    if(oldChannel.nsfw !== newChannel.nsfw) channelChangedEmbed.addField('NSFW status changed', `From ${oldChannel.nsfw} to ${newChannel.nsfw}`)
+    await logChannel.send({ embeds: [channelChangedEmbed] });
   }
 }

@@ -1,12 +1,15 @@
 // Require the necessary discord.js classes
 const fs = require('fs');
 const { Client, Collection, Intents } = require('discord.js');
-const { token } = require('./config.json');
+require("dotenv").config();
+const mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGODB_URI).then(() => console.log(Date() + ': Connected to database')).catch(console.log);
 
 // Create a new client instance
 const client = new Client({
-	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS],
-	partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
+	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS],
+	partials: ['MESSAGE', 'CHANNEL', 'GUILD_MEMBER'],
 });
 
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
@@ -31,4 +34,4 @@ for (const folder of commandFolders) {
 }
 
 // Login to Discord with your client's token
-client.login(token);
+client.login(process.env.GARDEN_TOOLS_TOKEN);

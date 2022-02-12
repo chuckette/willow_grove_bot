@@ -16,6 +16,13 @@ module.exports = {
 						}
 					});
 				});
+				guild.channels.fetch().then(channels => {
+					channels.forEach((channel) => {
+						if (!channel.isText()) return;
+						channel.messages.fetch({ limit: 50 })
+							.catch(console.log);
+					})
+				}).catch(console.log);
 			}).catch(console.log)
 		}).catch(console.log);
 		console.log(Date() + ': Ready!');

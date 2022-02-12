@@ -17,8 +17,9 @@ module.exports = {
 				.setDefaultPermission(false),
 	async execute(interaction) {
 		const user = await interaction.guild.members.fetch(await interaction.user.fetch());
-		let logChannel = await interaction.guild.channels.fetch(logChannelId);
-		const target = (await interaction.guild.members.fetch(await interaction.options.getUser('target')));
+		const logChannel = await interaction.guild.channels.fetch(logChannelId);
+		const target = await interaction.guild.members.fetch(interaction.options.getUser('target')).catch(() => {interaction.reply({content: 'Unable to locate user!', ephemeral: true}); return;});
+		if (target === undefined) return;
 		if (!interaction.memberPermissions.has([Permissions.FLAGS.KICK_MEMBERS, Permissions.FLAGS.KICK_MEMBERS]) || user.roles.highest.position <= target.roles.highest.position) {
 			logChannel.send({ embeds: [await buildPermissionFailEmbed(user,target)] });
 			interaction.reply({content: 'You can\'t kick them!', ephemeral: true})
@@ -27,8 +28,8 @@ module.exports = {
 		const reason = (interaction.options.getString('reason') === null) ? "None provided" : interaction.options.getString('reason');
 		interaction.guild.members.kick(target, reason);
 		kickEmbed = await buildKickEmbed(await target.user.fetch(), reason);
-		await interaction.reply({ embeds: [kickEmbed] });
-		logChannel.send({ embeds: [kickEmbed.addField('Kicker', user.user.tag, true)] })
+		await interaction.reply({ embeds: [kickEmbed], ephemeral: true });
+		logChannel.send({ embeds: [kickEmbed.addField('Banner', user.user.tag, true)] })
 	}
 };
 
