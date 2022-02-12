@@ -2,14 +2,11 @@
 const fs = require('fs');
 const { Client, Collection, Intents } = require('discord.js');
 require("dotenv").config();
-const mongoose = require('mongoose');
-
-mongoose.connect(process.env.MONGODB_URI).then(() => console.log(Date() + ': Connected to database')).catch(console.log);
 
 // Create a new client instance
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS],
-  partials: ['MESSAGE', 'CHANNEL', 'GUILD_MEMBER'],
+  partials: ['GUILDS', 'MESSAGE', 'CHANNEL', 'GUILD_MEMBER'],
 });
 
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
