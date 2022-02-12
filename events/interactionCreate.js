@@ -21,50 +21,50 @@ module.exports = {
       }
     } else
 
-    if (interaction.isSelectMenu()) {
-      // Define maps for the roles
-      const colorMap = new Map(userRoles.colors);
-      const gaymerMap = new Map(userRoles.gaymers);
-      const pronounMap = new Map(userRoles.pronouns);
-      // Handle the selections
-      let user = await interaction.guild.members.fetch(interaction.user.id);
-      let removeRoles = [];
-      let addedRoles = [];
-      switch (interaction.customId) {
-        case 'colors':
-          //const colorMap = new Map(JSON.parse(colors));
-          //console.log(colorMap);
-          interaction.update({ content: `You picked: ${interaction.values}` });
-          for (var [key, entry] of colorMap) {
-            if (user.roles.cache.has(entry)) {
-              removeRoles.push(entry);
+      if (interaction.isSelectMenu()) {
+        // Define maps for the roles
+        const colorMap = new Map(userRoles.colors);
+        const gaymerMap = new Map(userRoles.gaymers);
+        const pronounMap = new Map(userRoles.pronouns);
+        // Handle the selections
+        let user = await interaction.guild.members.fetch(interaction.user.id);
+        let removeRoles = [];
+        let addedRoles = [];
+        switch (interaction.customId) {
+          case 'colors':
+            //const colorMap = new Map(JSON.parse(colors));
+            //console.log(colorMap);
+            interaction.update({ content: `You picked: ${interaction.values}` });
+            for (var [key, entry] of colorMap) {
+              if (user.roles.cache.has(entry)) {
+                removeRoles.push(entry);
+              }
             }
-          }
-          addedRoles.push(colorMap.get(interaction.values[0]));
-          break;
-        case 'pronouns':
-          interaction.update({ content: `You picked: ${interaction.values}` })
-          for (var [key, entry] of pronounMap) {
-            if (user.roles.cache.has(entry)) {
-              removeRoles.push(entry);
+            addedRoles.push(colorMap.get(interaction.values[0]));
+            break;
+          case 'pronouns':
+            interaction.update({ content: `You picked: ${interaction.values}` })
+            for (var [key, entry] of pronounMap) {
+              if (user.roles.cache.has(entry)) {
+                removeRoles.push(entry);
+              }
             }
-          }
-          interaction.values.forEach((key) => addedRoles.push(pronounMap.get(key)));
-          break;
-        case 'gaymer':
-          interaction.update({ content: `You picked: ${interaction.values}` })
-          for (var [key, entry] of gaymerMap) {
-            if (user.roles.cache.has(entry)) {
-              removeRoles.push(entry);
+            interaction.values.forEach((key) => addedRoles.push(pronounMap.get(key)));
+            break;
+          case 'gaymer':
+            interaction.update({ content: `You picked: ${interaction.values}` })
+            for (var [key, entry] of gaymerMap) {
+              if (user.roles.cache.has(entry)) {
+                removeRoles.push(entry);
+              }
             }
-          }
-          interaction.values.forEach((key) => addedRoles.push(gaymerMap.get(key)));
-          break;
+            interaction.values.forEach((key) => addedRoles.push(gaymerMap.get(key)));
+            break;
+        }
+        await user.roles.remove(removeRoles);
+        if (interaction.values[0] === 'none') return;
+        await user.fetch()
+        await user.roles.add(addedRoles);
       }
-      await user.roles.remove(removeRoles);
-      if (interaction.values[0] === 'none') return;
-      await user.fetch()
-      await user.roles.add(addedRoles);
-    }
   },
 };

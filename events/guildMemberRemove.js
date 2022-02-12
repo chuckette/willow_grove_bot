@@ -12,12 +12,12 @@ module.exports = {
     let userRolesTyped = [];
     userRolesList.forEach((role) => userRolesTyped.push(role[0]));
     const newChannelEmbed = new MessageEmbed()
-          .setColor('#ff0000')
-          .setAuthor({ name: 'Member Left', iconURL: member.user.avatarURL() })
-          .setDescription(`${member.user} ${member.user.tag}`)
-          .addField('Roles', userRolesTyped.join(', '))
-          .setFooter({text: `ID: ${member.user.id}`})
-          .setTimestamp();
+      .setColor('#ff0000')
+      .setAuthor({ name: 'Member Left', iconURL: member.user.avatarURL() })
+      .setDescription(`${member.user} ${member.user.tag}`)
+      .addField('Roles', userRolesTyped.join(', '))
+      .setFooter({text: `ID: ${member.user.id}`})
+      .setTimestamp();
     logChannel.send({ embeds: [newChannelEmbed] });
   }
 }

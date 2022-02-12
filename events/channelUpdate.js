@@ -5,10 +5,10 @@ module.exports = {
   async execute(oldChannel, newChannel) {
     const logChannel = await oldChannel.guild.channels.fetch(logChannelId);
     const channelChangedEmbed = new MessageEmbed()
-          .setColor('#ffffff')
-          .setAuthor({ name: 'Channel Update' })
-          .setFooter({text: `id: ${oldChannel.id}`})
-          .setTimestamp();
+      .setColor('#ffffff')
+      .setAuthor({ name: 'Channel Update' })
+      .setFooter({text: `id: ${oldChannel.id}`})
+      .setTimestamp();
     if(oldChannel.name !== newChannel.name) channelChangedEmbed.addField('Name changed', `From ${oldChannel.name} to ${newChannel.name}`)
     if(oldChannel.topic !== newChannel.topic) {
       const oldTopic = oldChannel.topic === null ? 'null' : oldChannel.topic;

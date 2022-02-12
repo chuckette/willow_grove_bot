@@ -5,12 +5,11 @@ module.exports = {
   async execute(channel) {
     const logChannel = await channel.guild.channels.fetch(logChannelId);
     const newChannelEmbed = new MessageEmbed()
-          .setColor('#ff0000')
-          .setAuthor({ name: channel.guild.name, iconURL: channel.guild.iconURL() })
-          .setDescription(`**Channel deleted: #${channel.name}**`)
-          .setFooter(`ID: ${channel.id}`)
-          .setTimestamp();
+      .setColor('#ff0000')
+      .setAuthor({ name: channel.guild.name, iconURL: channel.guild.iconURL() })
+      .setDescription(`**Channel deleted: #${channel.name}**`)
+      .setFooter(`ID: ${channel.id}`)
+      .setTimestamp();
     logChannel.send({ embeds: [newChannelEmbed] });
-
   }
 }

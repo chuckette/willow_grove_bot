@@ -5,29 +5,29 @@ const { logChannelId } = require('../../config.json');
 
 module.exports = {
   data: new SlashCommandBuilder()
-        .setName('ban')
-        .setDescription('Bans a user')
-        .addSubcommand(subcommand =>
-          subcommand.setName('user')
-                .setDescription('Targets a user by name')
-                .addUserOption(option =>
-                      option.setName('target')
-                            .setDescription('Target user')
-                            .setRequired(true))
-                .addStringOption(option =>
-                      option.setName('reason')
-                            .setDescription('Ban reason')))
-        .addSubcommand(subcommand =>
-          subcommand.setName('id')
-                .setDescription('Targets a user by ID')
-                .addStringOption(option =>
-                      option.setName('target')
-                            .setDescription('Target user ID')
-                            .setRequired(true))
-                .addStringOption(option =>
-                      option.setName('reason')
-                            .setDescription('Ban reason')))
-        .setDefaultPermission(false),
+  .setName('ban')
+  .setDescription('Bans a user')
+  .addSubcommand(subcommand =>
+    subcommand.setName('user')
+    .setDescription('Targets a user by name')
+    .addUserOption(option =>
+      option.setName('target')
+      .setDescription('Target user')
+      .setRequired(true))
+    .addStringOption(option =>
+      option.setName('reason')
+      .setDescription('Ban reason')))
+  .addSubcommand(subcommand =>
+    subcommand.setName('id')
+    .setDescription('Targets a user by ID')
+    .addStringOption(option =>
+      option.setName('target')
+      .setDescription('Target user ID')
+      .setRequired(true))
+    .addStringOption(option =>
+      option.setName('reason')
+      .setDescription('Ban reason')))
+  .setDefaultPermission(false),
   async execute(interaction) {
     const user = await interaction.guild.members.fetch(await interaction.user.fetch());
     const logChannel = await interaction.guild.channels.fetch(logChannelId);
@@ -51,22 +51,22 @@ module.exports = {
 
 async function buildBanEmbed(bannedUser, reason="None provided") {
   const bannedUserEmbed = new MessageEmbed()
-        .setColor('#ff0000')
-        .setTitle('Banned!')
-        .setThumbnail(bannedUser.bannerURL())
-        .addFields(
-          { name: 'User', value: bannedUser.username.toString(), inline: true },
-          { name: 'User ID', value: bannedUser.id, inline: true },
-          { name: 'Reason', value: reason }
-        );
+    .setColor('#ff0000')
+    .setTitle('Banned!')
+    .setThumbnail(bannedUser.bannerURL())
+    .addFields(
+      { name: 'User', value: bannedUser.username.toString(), inline: true },
+      { name: 'User ID', value: bannedUser.id, inline: true },
+      { name: 'Reason', value: reason }
+    );
   return bannedUserEmbed;
 }
 
 async function buildPermissionFailEmbed(user, target) {
   const permissionFailEmbed = new MessageEmbed()
-        .setColor('#ff0000')
-        .setTitle('Permission failure!')
-        .setDescription(user.user.tag + '(' + user.nickname + ') tried banning ' + target.user.tag + '(' + user.nickname + ')')
-        .setTimestamp();
+    .setColor('#ff0000')
+    .setTitle('Permission failure!')
+    .setDescription(user.user.tag + '(' + user.nickname + ') tried banning ' + target.user.tag + '(' + user.nickname + ')')
+    .setTimestamp();
   return permissionFailEmbed;
 }

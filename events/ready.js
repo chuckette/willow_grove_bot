@@ -23,6 +23,7 @@ module.exports = {
               .catch(console.log);
           })
         }).catch(console.log);
+        guild.members.fetch().then()
       }).catch(console.log)
     }).catch(console.log);
     console.log(Date() + ': Ready!');

@@ -3,8 +3,8 @@ const { MessageEmbed } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
-        .setName('server')
-        .setDescription('Replies with server info!'),
+  .setName('server')
+  .setDescription('Replies with server info!'),
   async execute(interaction) {
     // Variable definitions for async grabs that are needed multiple times
     let channels = await interaction.guild.channels.fetch().then((success) => success).catch(console.error);
@@ -39,19 +39,19 @@ module.exports = {
     rolesList = rolesList.join(', ');
     // Build the embed
     const serverInfoEmbed = new MessageEmbed()
-          .setColor('#ffffff')
-          .setAuthor({ name: interaction.guild.name, iconURL: interaction.guild.iconURL() })
-          .setThumbnail(`${interaction.guild.iconURL()}`)
-          .addFields(
-            { name: 'Owner', value: await interaction.guild.fetchOwner().then((success) => success.user.tag).catch(console.error), inline: true },
-            { name: 'Category Channels', value: categories.toString(), inline: true},
-            { name: 'Text Channels', value: textChannels.toString(), inline: true},
-            { name: 'Voice Channels', value: voiceChannels.toString(), inline: true},
-            { name: 'Members', value: interaction.guild.memberCount.toString(), inline: true },
-            { name: 'Roles', value: rolesCount.toString(), inline: true },
-            { name: 'Role List', value: rolesList }
-          )
+      .setColor('#ffffff')
+      .setAuthor({ name: interaction.guild.name, iconURL: interaction.guild.iconURL() })
+      .setThumbnail(`${interaction.guild.iconURL()}`)
+      .addFields(
+        { name: 'Owner', value: await interaction.guild.fetchOwner().then((success) => success.user.tag).catch(console.error), inline: true },
+        { name: 'Category Channels', value: categories.toString(), inline: true},
+        { name: 'Text Channels', value: textChannels.toString(), inline: true},
+        { name: 'Voice Channels', value: voiceChannels.toString(), inline: true},
+        { name: 'Members', value: interaction.guild.memberCount.toString(), inline: true },
+        { name: 'Roles', value: rolesCount.toString(), inline: true },
+        { name: 'Role List', value: rolesList }
+      )
       .setFooter({ text: `ID: ${interaction.guild.id} | Server Created: ${interaction.guild.createdAt.toLocaleDateString()})` })
-    await interaction.reply({ embeds: [serverInfoEmbed] });
-  },
+await interaction.reply({ embeds: [serverInfoEmbed] });
+},
 };

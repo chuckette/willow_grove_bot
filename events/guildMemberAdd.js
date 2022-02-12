@@ -1,4 +1,4 @@
-const { guildId, logChannelId, autoRoleId } = require('../config.json');
+const { logChannelId, autoRoleId } = require('../config.json');
 const { MessageEmbed } = require('discord.js');
 module.exports = {
   name: 'guildMemberAdd',
@@ -27,12 +27,12 @@ module.exports = {
     const dateDif = `${yearDif} years, ${monthDif} months, ${dayDif} days`;
     await member.roles.add(autoRoleId);
     const newChannelEmbed = new MessageEmbed()
-          .setColor('#00ff00')
-          .setAuthor({ name: 'Member Joined', iconURL: member.user.avatarURL() })
-          .setDescription(`${member.user} ${member.user.tag}`)
-          .addField('Account Created', dateDif)
-          .setFooter({text: `ID: ${member.user.id}`})
-          .setTimestamp();
+      .setColor('#00ff00')
+      .setAuthor({ name: 'Member Joined', iconURL: member.user.avatarURL() })
+      .setDescription(`${member.user} ${member.user.tag}`)
+      .addField('Account Created', dateDif)
+      .setFooter({text: `ID: ${member.user.id}`})
+      .setTimestamp();
     logChannel.send({ embeds: [newChannelEmbed] });
   }
 }

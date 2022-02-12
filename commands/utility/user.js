@@ -3,11 +3,11 @@ const { MessageEmbed } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
-        .setName('user')
-        .setDescription('Replies with user info!')
-        .addUserOption(option => 
-          option.setName('user')
-                .setDescription('Target user')),
+  .setName('user')
+  .setDescription('Replies with user info!')
+  .addUserOption(option => 
+    option.setName('user')
+    .setDescription('Target user')),
   async execute(interaction) {
     let user = interaction.options.getUser('user');
     if (user == null) {
@@ -23,14 +23,14 @@ module.exports = {
     let userRolesTyped = [];
     userRolesList.forEach((role) => userRolesTyped.push(role[0]));
     const userInfoEmbed = new MessageEmbed()
-          .setColor(user.accentColor)
-          .setAuthor({ name: user.username.toString(), iconURL: user.avatarURL() })
-          .setThumbnail(user.bannerURL())
-          .addFields(
-            { name: 'User ID', value: user.id, inline: true },
-            { name: 'Created', value: user.createdAt.toLocaleDateString(), inline: true },
-            { name: 'Roles', value: userRolesTyped.join(', ') }
-          )
+      .setColor(user.accentColor)
+      .setAuthor({ name: user.username.toString(), iconURL: user.avatarURL() })
+      .setThumbnail(user.bannerURL())
+      .addFields(
+        { name: 'User ID', value: user.id, inline: true },
+        { name: 'Created', value: user.createdAt.toLocaleDateString(), inline: true },
+        { name: 'Roles', value: userRolesTyped.join(', ') }
+      )
     await interaction.reply({ embeds: [userInfoEmbed] });
   },
 };

@@ -5,16 +5,16 @@ const { logChannelId } = require('../../config.json');
 
 module.exports = {
   data: new SlashCommandBuilder()
-        .setName('kick')
-        .setDescription('Kicks a user')
-        .addUserOption(option =>
-              option.setName('target')
-                    .setDescription('Target user')
-                    .setRequired(true))
-        .addStringOption(option =>
-              option.setName('reason')
-                    .setDescription('Kick reason'))
-        .setDefaultPermission(false),
+  .setName('kick')
+  .setDescription('Kicks a user')
+  .addUserOption(option =>
+    option.setName('target')
+    .setDescription('Target user')
+    .setRequired(true))
+  .addStringOption(option =>
+    option.setName('reason')
+    .setDescription('Kick reason'))
+  .setDefaultPermission(false),
   async execute(interaction) {
     const user = await interaction.guild.members.fetch(await interaction.user.fetch());
     const logChannel = await interaction.guild.channels.fetch(logChannelId);
@@ -35,22 +35,22 @@ module.exports = {
 
 async function buildKickEmbed(kickedUser, reason="None provided") {
   const kickedUserEmbed = new MessageEmbed()
-        .setColor('#ff0000')
-        .setTitle('Kicked!')
-        .setThumbnail(kickedUser.bannerURL())
-        .addFields(
-          { name: 'User', value: kickedUser.username.toString(), inline: true },
-          { name: 'User ID', value: kickedUser.id, inline: true },
-          { name: 'Reason', value: reason }
-        );
+    .setColor('#ff0000')
+    .setTitle('Kicked!')
+    .setThumbnail(kickedUser.bannerURL())
+    .addFields(
+      { name: 'User', value: kickedUser.username.toString(), inline: true },
+      { name: 'User ID', value: kickedUser.id, inline: true },
+      { name: 'Reason', value: reason }
+    );
   return kickedUserEmbed;
 }
 
 async function buildPermissionFailEmbed(user, target) {
   const permissionFailEmbed = new MessageEmbed()
-        .setColor('#ff0000')
-        .setTitle('Permission failure!')
-        .setDescription(user.user.tag + '(' + user.nickname + ') tried kicking ' + target.user.tag + '(' + user.nickname + ')')
-        .setTimestamp();
+    .setColor('#ff0000')
+    .setTitle('Permission failure!')
+    .setDescription(user.user.tag + '(' + user.nickname + ') tried kicking ' + target.user.tag + '(' + user.nickname + ')')
+    .setTimestamp();
   return permissionFailEmbed;
 }
