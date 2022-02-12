@@ -2,9 +2,9 @@ const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitT
 const { userRoles } = require('../config.json');
 
 function toMap(array) {
-	const map = new Map();
-	for(const entry of array) map.set(entry[0], entry[1]);
-	return map;
+  const map = new Map();
+  for(const entry of array) map.set(entry[0], entry[1]);
+  return map;
 }
 
 module.exports = {
