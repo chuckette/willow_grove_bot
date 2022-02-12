@@ -11,13 +11,13 @@ module.exports = {
     userRolesList.sort((a,b) =>  { return b[1] - a[1] });
     let userRolesTyped = [];
     userRolesList.forEach((role) => userRolesTyped.push(role[0]));
-    const newChannelEmbed = new MessageEmbed()
+    var removedUserEmbed = new MessageEmbed()
       .setColor('#ff0000')
       .setAuthor({ name: 'Member Left', iconURL: member.user.avatarURL() })
       .setDescription(`${member.user} ${member.user.tag}`)
-      .addField('Roles', userRolesTyped.join(', '))
       .setFooter({text: `ID: ${member.user.id}`})
       .setTimestamp();
-    logChannel.send({ embeds: [newChannelEmbed] });
+    if (userRolesList.length !== 0) removedUserEmbed.addField('Roles', userRolesTyped.join(', '))
+    logChannel.send({ embeds: [removedUserEmbed] });
   }
 }
