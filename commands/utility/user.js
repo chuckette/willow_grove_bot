@@ -13,7 +13,6 @@ module.exports = {
     if (user == null) {
       user = interaction.user;
     }
-    console.log(dateDif);
     user = await user.fetch(true);
     let userRoles = await interaction.guild.members.fetch(user.id).then((success) => success._roles);
     let userRolesList = []

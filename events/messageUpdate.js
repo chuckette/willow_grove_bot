@@ -3,7 +3,7 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
   name: 'messageUpdate',
   async execute(oldMessage, newMessage) {
-    if (message.member === null || message.member.user.bot) return;
+    if (newMessage.member === null || newMessage.member.user.bot) return;
     const logChannel = await newMessage.guild.channels.fetch(logChannelId);
     let editedMessage = new MessageEmbed()
       .setColor('#0000ff')
@@ -11,9 +11,11 @@ module.exports = {
       .setDescription(`**Message edited in ${newMessage.channel}** [Jump to message](${newMessage.url})`)
       .setFooter({text: `Author: ${newMessage.author.id}`})
       .setTimestamp();
-    (oldMessage.content === null) ? editedMessage.addField('Before', 'Unable to read old message') : editedMessage.addField('Before', oldMessage.content)
+    if (oldMessage.partial) return;
+    (oldMessage.content === null) ? editedMessage.addField('Before', 'Unable to read old message') : ((oldMessage.content.length > 512) ? editedMessage.addField('Before', oldMessage.content.substring(0,512) + '...') : editedMessage.addField('Before', oldMessage.content))
     if (newMessage.partial) newMessage.fetch();
-    editedMessage.addField('After', newMessage.content)
+    if (newMessage.content === oldMessage.content) return;
+    (newMessage.content.length > 512) ? editedMessage.addField('After', newMessage.content.substring(0,512) + '...') : editedMessage.addField('After', newMessage.content)
     logChannel.send({ embeds: [editedMessage] });
   }
 }

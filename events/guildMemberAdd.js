@@ -22,7 +22,7 @@ module.exports = {
         yearDif--;
         monthDif = 11;
       }
-      dayDif += daysInMonth[user.createdAt.getMonth()];
+      dayDif += daysInMonth[member.user.createdAt.getMonth()];
     }
     const dateDif = `${yearDif} years, ${monthDif} months, ${dayDif} days`;
     await member.roles.add(autoRoleId);
